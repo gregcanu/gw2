@@ -18,4 +18,12 @@ class MainController extends AbstractController
 
         return $this->render('home.html.twig', ['message' => $message]);
     }
+    
+    /**
+      * @Route("/cv")
+      */
+    public function cv()
+    {
+        return $this->render('cv.html.twig');
+    }
 }
