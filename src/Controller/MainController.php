@@ -10,20 +10,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
     /**
-      * @Route("/home")
+      * @Route("/home", name="home")
       */
     public function home()
     {
         $message = "Hello";
 
-        return $this->render('home.html.twig', ['message' => $message]);
+        return $this->render('main/home.html.twig', ['message' => $message]);
     }
     
     /**
-      * @Route("/cv")
+      * @Route("/cv", name="cv")
       */
     public function cv()
     {
-        return $this->render('cv.html.twig');
+        return $this->render('main/cv.html.twig');
     }
 }
