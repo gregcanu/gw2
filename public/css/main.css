@@ -1,3 +1,23 @@
 body {
     height: 1080px;
 }
+
+.item_icon {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+#tableGw2Items tbody tr:nth-child(odd) {
+    background-color: #4E5D6C; 
+}
+
+#tableGw2Items .cell_icon {
+    height: 50px;
+    width: 50px;
+    padding: 5px;
+}
+
+#tableGw2Items .cell_name {
+    vertical-align: middle;
+}
