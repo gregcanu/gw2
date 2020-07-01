@@ -20,14 +20,12 @@ class UserController extends AbstractController
         ->getRepository(User::class)
         ->find($id);
 
-    if (!$user) {
-        throw $this->createNotFoundException(
-            'No user found for id '.$id
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
         );
     }
 
-    // or render a template
-    // in the template, print things with {{ user.pseudo }}
     return $this->render('user/show.html.twig', ['user' => $user]);
     }
     
@@ -57,5 +55,22 @@ class UserController extends AbstractController
         $entityManager->flush();
 
         return new Response('Saved new product with id '.$user->getId());
+    }
+    
+    /**
+    * @Route("/utilisateurs", name="users_show")
+    */
+    public function showAllUsers() {
+        $users = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findAll();
+
+        if (!$users) {
+            throw $this->createNotFoundException(
+                'No users found'
+            );
+        }
+        
+        return $this->render('user/users.html.twig', ['users' => $users]);
     }
 }
