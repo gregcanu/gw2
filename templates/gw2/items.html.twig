@@ -10,13 +10,25 @@
                 <tr>
                     <th scope="col"></th>
                     <th scope="col">Nom</th>
+                    <th scope="col">Achat</th>
+                    <th scope="col">Vente</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in items %}
+                {% for id in items %}
                     <tr class="">
-                        <td class="cell_icon"><img src="{{ item.icon }}" alt="" class="item_icon"></td>
-                        <td class="cell_name">{{ item.name }}</td>
+                        <td class="cell_icon"><img src="{{ id.item.icon }}" alt="" class="item_icon"></td>
+                        <td class="cell_name">{{ id.item.name }}</td>
+                        <td class="cell_buy">
+                            {{ id.listing.buy.gold }}   <img src="{{ asset(('img/gw2/gold.png')) }}"> 
+                            {{ id.listing.buy.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
+                            {{ id.listing.buy.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
+                        </td>
+                        <td class="cell_sell">
+                            {{ id.listing.sell.gold }}   <img src="{{ asset(('img/gw2/gold.png')) }}"> 
+                            {{ id.listing.sell.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
+                            {{ id.listing.sell.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

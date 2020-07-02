@@ -59,4 +59,25 @@ class Gw2Repository {
         
         return $response->toArray();
     }
+    
+    /*
+     *  Renvoie le premier prix d'achat et de vente d'un item
+     */
+    public function getListingWithPriceFilter($id) {
+        $listing = $this->request($id, 'listing');
+        $prices = [];
+        
+        // Convertis le premier prix d'achat et de vente en gold, silver et copper
+        $buy = $listing['buys'][0]['unit_price'];
+        $prices['buy']['gold'] = floor($buy/10000);
+        $prices['buy']['silver'] = substr(floor($buy/100), -2);
+        $prices['buy']['copper'] = substr($buy, -2);
+        
+        $sell = $listing['sells'][0]['unit_price'];
+        $prices['sell']['gold'] = floor($sell/10000);
+        $prices['sell']['silver'] = substr(floor($sell/100), -2);;
+        $prices['sell']['copper'] = substr($sell, -2);
+        
+        return $prices;
+    }
 }
