@@ -1,10 +1,13 @@
 {# templates/lucky/number.html.twig #}
 {% extends 'base.html.twig' %}
 {% block body %}
-<object type="application/pdf" width="100%" height="100%">
-   <param name="src" value="{{ asset('pdf/cv.pdf') }}" />
-   <p>Votre navigateur n'arrive pas à lire les fichiers PDF.
-      Pas de soucis, <a href="{{ asset('pdf/cv.pdf') }}">cliquez ici pour télécharger le CV</a>
-   </p>
-</object>
+    <div id="cv">
+        <object type="application/pdf" width="100%" height="100%">
+            <param name="src" value="{{ asset('pdf/cv.pdf') }}" />
+            <p>
+                Votre navigateur n'arrive pas à lire les fichiers PDF.
+                <a href="{{ asset('pdf/cv.pdf') }}">cliquez ici pour télécharger le CV</a>
+            </p>
+        </object>
+    </div>
 {% endblock %}

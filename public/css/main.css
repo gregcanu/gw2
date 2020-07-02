@@ -1,7 +1,11 @@
 body {
-    height: 1080px;
+    /*height: 1080px;*/
 }
 
+#cv {
+    height: 1080px;
+    width: 100%;
+}
 .item_icon {
     height: 50px;
     width: 50px;
