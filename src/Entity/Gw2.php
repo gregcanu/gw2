@@ -7,7 +7,7 @@ class Gw2 {
     private $api_url = 'https://api.guildwars2.com/v2/';
     private $item = 'items?id=';
     private $listing = 'commerce/listings/';
-    private $items_id = [90910, 75919, 73248, 46738, 46739, 19722, 37907, 19721];
+    private $items_id = [75919,73248,90910,46738,46739,19722,37907,19721];
 
     public function getApiUrl() {
         return $this->api_url;

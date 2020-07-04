@@ -1,0 +1,18 @@
+.item_icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+}
+
+#tableGw2Items tbody tr:nth-child(odd) {
+    background-color: #4E5D6C; 
+}
+
+#tableGw2Items td {
+    vertical-align: middle !important;
+    line-height: 40px;
+}
+
+.align_right {
+    text-align: right;
+}

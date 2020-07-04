@@ -7,6 +7,7 @@
             {# CSS files at "public/css/ #}
             <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
             <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('css/gw2.css') }}" rel="stylesheet"/>
         {% endblock %}
         {% block js %}
             {# JS files at "public/js" #}
@@ -42,7 +43,9 @@
             </ul>
         </div>
     </nav>
-{% block body %}{% endblock %}
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
 {% block javascripts %}{% endblock %}
 </body>
 </html>
