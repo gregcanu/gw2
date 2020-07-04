@@ -16,11 +16,19 @@ class Gw2Repository {
     }
     
     /* 
-     * Récupère les prix d'achat et de vente d'un item selon son id
+     * Récupère tous les prix d'achat et de vente d'un item selon son id
      * id: id de l'item
      */
     public function getListing($id) {
         return $this->request($id, 'listing');
+    }
+    
+    /* 
+     * Récupère les premier prix d'achat et de vente d'un item selon son id
+     * id: id de l'item
+     */
+    public function getPrice($id) {
+        return $this->request($id, 'price');
     }
     
     /*
@@ -45,6 +53,9 @@ class Gw2Repository {
             case 'listing':
                 $request = $gw2->getListing();
                 break;
+            case 'price':
+                $request = $gw2->getPrice();
+                break;
             default:
                 echo "Erreur, type de requête non spécifié";
                 break;
@@ -61,23 +72,23 @@ class Gw2Repository {
     }
     
     /*
-     *  Renvoie le premier prix d'achat et de vente d'un item
+     *  Renvoie le premier prix d'achat (le plus élevé) et de vente (le plus bas) d'un item
      */
-    public function getListingWithPriceFilter($id) {
-        $listing = $this->request($id, 'listing');
-        $prices = [];
-        
+    public function getPriceItem($id) {
+        $prices= $this->request($id, 'price');
+//        var_dump($prices);die();
+        $item_prices = [];
         // Convertis le premier prix d'achat et de vente en gold, silver et copper
-        $buy = $listing['buys'][0]['unit_price'];
-        $prices['buy']['gold'] = floor($buy/10000);
-        $prices['buy']['silver'] = substr(floor($buy/100), -2);
-        $prices['buy']['copper'] = substr($buy, -2);
+        $buy = $prices['buys']['unit_price'];
+        $item_prices['buy']['gold'] = floor($buy/10000);
+        $item_prices['buy']['silver'] = substr(floor($buy/100), -2);
+        $item_prices['buy']['copper'] = substr($buy, -2);
         
-        $sell = $listing['sells'][0]['unit_price'];
-        $prices['sell']['gold'] = floor($sell/10000);
-        $prices['sell']['silver'] = substr(floor($sell/100), -2);;
-        $prices['sell']['copper'] = substr($sell, -2);
+        $sell = $prices['sells']['unit_price'];
+        $item_prices['sell']['gold'] = floor($sell/10000);
+        $item_prices['sell']['silver'] = substr(floor($sell/100), -2);;
+        $item_prices['sell']['copper'] = substr($sell, -2);
         
-        return $prices;
+        return $item_prices;
     }
 }

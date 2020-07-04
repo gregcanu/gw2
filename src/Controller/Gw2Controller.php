@@ -20,7 +20,7 @@ class Gw2Controller extends AbstractController {
         $items = [];
         foreach($items_id as $id) {
             $items[$id]["item"] = $gw2->getItem($id);
-            $items[$id]["listing"] = $gw2->getListingWithPriceFilter($id);
+            $items[$id]["price"] = $gw2->getPriceItem($id);
         }
 
         return $this->render('gw2/items.html.twig', ['items' => $items]);
@@ -43,6 +43,17 @@ class Gw2Controller extends AbstractController {
      * id: id de l'item
      */
     public function getItemListing($id) {
+        $gw2 = new Gw2Repository();
+        $item = $gw2->getListing($id);
+        var_dump($item); die();
+    }
+    
+    /**
+     * @Route("gw2/item/price/{id}", name="item_price")
+     * Récupère le premier prix d'achat et de vente d'un item
+     * id: id de l'item
+     */
+    public function getItemPrice($id) {
         $gw2 = new Gw2Repository();
         $item = $gw2->getListing($id);
         var_dump($item); die();

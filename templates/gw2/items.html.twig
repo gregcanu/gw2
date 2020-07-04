@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Objets GW2{% endblock %}
+{% block title %}Items GW2{% endblock %}
 
 {% block body %}
     <div class="page-header">
@@ -14,6 +14,7 @@
                     <th scope="col" class="col-3">Nom</th>
                     <th scope="col" class="col-2 align_right">Achat</th>
                     <th scope="col" class="col-2 align_right">Vente</th>
+                    <th scope="col" class="col-4 align_right"></th>
                 </tr>
             </thead>
             <tbody>
@@ -22,14 +23,16 @@
                         <td class="cell_icon col-1"><img src="{{ id.item.icon }}" alt="" class="item_icon"></td>
                         <td class="cell_name col-3">{{ id.item.name }}</td>
                         <td class="cell_buy col-2 align_right">
-                            {% if id.listing.buy.gold != 0 %} {{ id.listing.buy.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
-                            {{ id.listing.buy.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
-                            {{ id.listing.buy.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
+                            {% if id.price.buy.gold != 0 %} {{ id.price.buy.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
+                            {{ id.price.buy.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
+                            {{ id.price.buy.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
                         </td>
                         <td class="cell_sell col-2 align_right">
-                            {% if id.listing.buy.gold != 0 %} {{ id.listing.sell.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
-                            {{ id.listing.sell.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
-                            {{ id.listing.sell.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
+                            {% if id.price.buy.gold != 0 %} {{ id.price.sell.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
+                            {{ id.price.sell.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
+                            {{ id.price.sell.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
+                        </td>
+                        <td class="cell_sell col-2 align_right">
                         </td>
                     </tr>
                 {% endfor %}
