@@ -21,6 +21,7 @@ class Gw2Controller extends AbstractController {
         foreach($items_id as $id) {
             $items[$id]["item"] = $gw2->getItem($id);
             $items[$id]["price"] = $gw2->getPriceItem($id);
+            $items[$id]["pricetosell"] = $gw2->getItemPriceToSell($id);
         }
 
         return $this->render('gw2/items.html.twig', ['items' => $items]);

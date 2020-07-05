@@ -11,17 +11,17 @@
             <thead>
                 <tr class="d-flex">
                     <th scope="col" class="col-1"></th>
-                    <th scope="col" class="col-3">Nom</th>
+                    <th scope="col" class="col-5">Nom</th>
                     <th scope="col" class="col-2 align_right">Achat</th>
                     <th scope="col" class="col-2 align_right">Vente</th>
-                    <th scope="col" class="col-4 align_right"></th>
+                    <th scope="col" class="col-2 align_right">Vendre à</th>
                 </tr>
             </thead>
             <tbody>
                 {% for id in items %}
                     <tr class="d-flex">
                         <td class="cell_icon col-1"><img src="{{ id.item.icon }}" alt="" class="item_icon"></td>
-                        <td class="cell_name col-3">{{ id.item.name }}</td>
+                        <td class="cell_name col-5">{{ id.item.name }}</td>
                         <td class="cell_buy col-2 align_right">
                             {% if id.price.buy.gold != 0 %} {{ id.price.buy.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
                             {{ id.price.buy.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
@@ -33,6 +33,9 @@
                             {{ id.price.sell.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
                         </td>
                         <td class="cell_sell col-2 align_right">
+                            {% if id.pricetosell.gold != 0 %} {{ id.pricetosell.gold }} <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
+                            {{ id.pricetosell.silver }} <img src="{{ asset(('img/gw2/silver.png')) }}"> 
+                            {{ id.pricetosell.copper }} <img src="{{ asset(('img/gw2/copper.png')) }}"> 
                         </td>
                     </tr>
                 {% endfor %}

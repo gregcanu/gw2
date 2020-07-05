@@ -10,3 +10,7 @@ body {
     height: 1080px;
     width: 100%;
 }
+
+.align_right {
+    text-align: right;
+}

@@ -76,19 +76,41 @@ class Gw2Repository {
      */
     public function getPriceItem($id) {
         $prices= $this->request($id, 'price');
-//        var_dump($prices);die();
         $item_prices = [];
-        // Convertis le premier prix d'achat et de vente en gold, silver et copper
-        $buy = $prices['buys']['unit_price'];
-        $item_prices['buy']['gold'] = floor($buy/10000);
-        $item_prices['buy']['silver'] = substr(floor($buy/100), -2);
-        $item_prices['buy']['copper'] = substr($buy, -2);
         
+        // Prix en copper
+        $buy = $prices['buys']['unit_price'];
         $sell = $prices['sells']['unit_price'];
-        $item_prices['sell']['gold'] = floor($sell/10000);
-        $item_prices['sell']['silver'] = substr(floor($sell/100), -2);;
-        $item_prices['sell']['copper'] = substr($sell, -2);
+        
+        // Prix convertis en gold, silver, copper
+        $item_prices['buy'] = $this->convertPrice($buy);
+        $item_prices['sell'] = $this->convertPrice($sell);
         
         return $item_prices;
+    }
+    
+    /*
+     * Convertis le prix d'un item : copper => gold, silver, copper
+     * Exemple : 45278copper = 4gold 52silver 78copper
+     */
+    public function convertPrice($price) {
+        $item_price = [];
+        $item_price['gold'] = floor($price/10000);
+        $item_price['silver'] = substr(floor($price/100), -2);
+        $item_price['copper'] = substr($price, -2);
+        
+        return $item_price;
+    }
+    
+    /*
+     * Renvoie le prix auquel je dois vendre chaque item
+     * Le prix est entré manuellement ici selon les variations que je vois sur le commerce
+     * A terme il faudrait créé une fonctionnalité permettant de changer ces valeurs via une IHM
+     */
+    public function getItemPriceToSell($id) {
+        $gw2 = new Gw2();
+        $items_prices = $gw2->getItemsPriceToSell();
+        
+        return $this->convertPrice($items_prices[$id]);
     }
 }
