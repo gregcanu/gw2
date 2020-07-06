@@ -2,10 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\Gw2;
 use Symfony\Component\HttpClient\HttpClient;
 
 class Gw2Repository {
+    
+    const API_BASE_URL = 'https://api.guildwars2.com/v2/';
+    const API_ITEM = 'items?id=';
+    const API_LISTING = 'commerce/listings/';
+    const API_PRICE = 'commerce/prices/';
     
     /*
      *Récupère les informations d'un item selon son id
@@ -32,29 +36,18 @@ class Gw2Repository {
     }
     
     /*
-     * Récupère la liste des id des items qui m'intéresse
-     */
-    public function getItemsId() {
-        $gw2 = new Gw2();
-        return $gw2->getItemsId();
-    }
-    
-    /*
-     * Effectue une requête HTTP pour interroger l'API GW2
+     * Effectue une requête pour interroger l'API GW2
      */
     private function request($id, $type) {
-        $gw2 = new Gw2();
-        $url = $gw2->getApiUrl();
-        
         switch($type) {
             case 'item':
-                $request = $gw2->getItem();
+                $request = Gw2Repository::API_ITEM;
                 break;
             case 'listing':
-                $request = $gw2->getListing();
+                $request = Gw2Repository::API_LISTING;
                 break;
             case 'price':
-                $request = $gw2->getPrice();
+                $request = Gw2Repository::API_PRICE;
                 break;
             default:
                 echo "Erreur, type de requête non spécifié";
@@ -62,7 +55,7 @@ class Gw2Repository {
         }
         
         $client = HttpClient::create();
-        $response = $client->request('GET', $url.$request.$id);
+        $response = $client->request('GET', Gw2Repository::API_BASE_URL.$request.$id);
         
         if($response->getStatusCode() != 200) {
             return "Objet introuvable";
@@ -100,17 +93,5 @@ class Gw2Repository {
         $item_price['copper'] = substr($price, -2);
         
         return $item_price;
-    }
-    
-    /*
-     * Renvoie le prix auquel je dois vendre chaque item
-     * Le prix est entré manuellement ici selon les variations que je vois sur le commerce
-     * A terme il faudrait créé une fonctionnalité permettant de changer ces valeurs via une IHM
-     */
-    public function getItemPriceToSell($id) {
-        $gw2 = new Gw2();
-        $items_prices = $gw2->getItemsPriceToSell();
-        
-        return $this->convertPrice($items_prices[$id]);
     }
 }

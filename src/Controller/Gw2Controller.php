@@ -6,7 +6,11 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\Gw2Repository;
+use App\Entity\Item;
+use App\Repository\ItemRepository;
 
 class Gw2Controller extends AbstractController {
 
@@ -14,16 +18,16 @@ class Gw2Controller extends AbstractController {
      * @Route("gw2/items", name="items_show")
      * Affiche la liste des items
      */
-    public function getItems() {
+    public function getItems(ItemRepository $itemRepository) {
         $gw2 = new Gw2Repository();
-        $items_id = $gw2->getItemsId();
+        $items_info = $itemRepository->findAllItems();
         $items = [];
-        foreach($items_id as $id) {
-            $items[$id]["item"] = $gw2->getItem($id);
-            $items[$id]["price"] = $gw2->getPriceItem($id);
-            $items[$id]["pricetosell"] = $gw2->getItemPriceToSell($id);
+        foreach($items_info as $item) {
+            $item['price'] = $gw2->getPriceItem($item['api_id']);
+            $item['price_to_sell'] = $gw2->convertPrice($item['price_to_sell']);
+            $items[] = $item;
         }
-
+        
         return $this->render('gw2/items.html.twig', ['items' => $items]);
     }
     
@@ -69,6 +73,34 @@ class Gw2Controller extends AbstractController {
         $gw2 = new Gw2Repository();
         $item = $gw2->getListingWithPriceFilter($id);
         var_dump($item); die();
+    }
+    
+    /**
+     * @Route("/gw2/creer-item", name="create_item")
+     */
+    public function createItem(ValidatorInterface $validator): Response {
+       // you can fetch the EntityManager via $this->getDoctrine()
+        // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $item = new Item();
+        $item->setName('Stabilizing Matrix');
+        $item->setImage('image');
+        $item->setApiId(73248);
+        $item->setPriceToSell(3200);
+
+        $errors = $validator->validate($item);
+        if (count($errors) > 0) {
+            return new Response((string) $errors, 400);
+        }
+        
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($item);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        return new Response('Saved new product with id '.$item->getId()); 
     }
     
 }
