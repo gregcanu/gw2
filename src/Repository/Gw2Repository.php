@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Symfony\Component\HttpClient\HttpClient;
 
+// API GW2
 class Gw2Repository {
     
     const API_BASE_URL = 'https://api.guildwars2.com/v2/';
