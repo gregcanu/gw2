@@ -18,3 +18,7 @@ body {
 .align_center {
     text-align: center;
 }
+
+.bc-green {
+    background-color: #027800 !important;
+}

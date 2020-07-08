@@ -77,6 +77,7 @@ class Gw2Repository {
         $sell = $prices['sells']['unit_price'];
         
         // Prix convertis en gold, silver, copper
+        $item_prices['raw_sell_price'] = $sell;
         $item_prices['buy'] = $this->convertPrice($buy);
         $item_prices['sell'] = $this->convertPrice($sell);
         

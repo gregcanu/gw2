@@ -26,11 +26,24 @@ class ItemController extends AbstractController
         $items = [];
         foreach($items_info as $item) {
             $item['price'] = $gw2->getPriceItem($item['api_id']);
+            $item['is_sellable'] = $this->isSellable( $item['price']['raw_sell_price'], $item['price_to_sell']);
             $item['price_to_sell'] = $gw2->convertPrice($item['price_to_sell']);
             $items[] = $item;
         }
-        
+        // Tri le tableau en remontant les items qu'il faut vendre
+        array_multisort(array_column($items, 'is_sellable'), SORT_DESC, $items);
         return $this->render('item/index.html.twig', ['items' => $items]);
+    }
+    
+    /*
+     * Compare le prix de vente en commerce d'un item avec le prix à vendre pour savoir si il faut vendre l'item
+     * Retourne 1 si je dois vendre l'item (prix commerce >= prix auquel je dois vendre), sinon retourne 0
+     */
+    private function isSellable($sell_price, $price_to_sell) {
+        if($sell_price >= $price_to_sell) {
+            return 1;
+        }
+        return 0;
     }
 
     /**
