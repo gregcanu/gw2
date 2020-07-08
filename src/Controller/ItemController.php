@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\Gw2Repository;
 
 /**
  * @Route("/item")
@@ -20,9 +21,16 @@ class ItemController extends AbstractController
      */
     public function index(ItemRepository $itemRepository): Response
     {
-        return $this->render('item/index.html.twig', [
-            'items' => $itemRepository->findAll(),
-        ]);
+        $gw2 = new Gw2Repository();
+        $items_info = $itemRepository->findAllItems();
+        $items = [];
+        foreach($items_info as $item) {
+            $item['price'] = $gw2->getPriceItem($item['api_id']);
+            $item['price_to_sell'] = $gw2->convertPrice($item['price_to_sell']);
+            $items[] = $item;
+        }
+        
+        return $this->render('item/index.html.twig', ['items' => $items]);
     }
 
     /**

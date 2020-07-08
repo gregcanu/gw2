@@ -14,3 +14,7 @@ body {
 .align_right {
     text-align: right;
 }
+
+.align_center {
+    text-align: center;
+}
