@@ -16,3 +16,15 @@
 #tableGw2Items a {
     text-decoration: none;
 }
+
+.gold {
+    color : #ffd700;
+}
+
+.silver {
+    color : #c0c0c0;
+}
+
+.copper {
+    color : #d47f46;
+}
