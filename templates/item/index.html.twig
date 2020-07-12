@@ -28,24 +28,10 @@
                     {% endif %} 
                     <td class="cell_icon col-1"><img src="{{ asset(('img/gw2/')) }}{{ item.image }}" alt="" class="item_icon"></td>
                     <td class="cell_name col-3"> <a href="{{ path('item_show', {'id': item.id}) }}">{{ item.name }}</a></td>
-                    <td class="cell_buy col-2 align_right">
-                        {% if item.price.buy.gold != 0 %} <span class="gold">{{ item.price.buy.gold }}</span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
-                        {% if item.price.buy.silver != 0 or item.price.buy.gold > 0 %} <span class="silver"> {{ item.price.buy.silver }} </span> <img src="{{ asset(('img/gw2/silver.png')) }}"> {% endif %}
-                        <span class="copper"> {{ item.price.buy.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 
-                    </td>
-                    <td class="cell_sell col-2 align_right">
-                        {% if item.price.sell.gold != 0 %} <span class="gold"> {{ item.price.sell.gold }} </span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
-                        {% if item.price.sell.silver != 0 or item.price.sell.gold > 0%} <span class="silver"> {{ item.price.sell.silver }} </span><img src="{{ asset(('img/gw2/silver.png')) }}"> {% endif %}
-                        <span class="copper"> {{ item.price.sell.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 
-                    </td>
-                    <td class="cell_sell col-2 align_right">
-                        {% if item.price_to_sell.gold != 0 %} <span class="gold"> {{ item.price_to_sell.gold }} </span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
-                        {% if item.price_to_sell.silver != 0 or item.price_to_sell.gold > 0 %} <span class="silver"> {{ item.price_to_sell.silver }} </span> <img src="{{ asset(('img/gw2/silver.png')) }}"> {% endif %}
-                        <span class="copper"> {{ item.price_to_sell.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 
-                    </td>
-                    <td class="col-2 align_center">
-                        <a href="{{ path('item_edit', {'id': item.id}) }}" class="btn btn-outline-info">modifier</a>
-                    </td>
+                    <td class="cell_buy col-2 align_right">{% include 'item/_price.html.twig' with {'price': item.price.buy} %}</td>
+                    <td class="cell_sell col-2 align_right">{% include 'item/_price.html.twig' with {'price': item.price.sell} %}</td>
+                    <td class="cell_sell col-2 align_right">{% include 'item/_price.html.twig' with {'price': item.price_to_sell} %}</td>
+                    <td class="col-2 align_center"><a href="{{ path('item_edit', {'id': item.id}) }}" class="btn btn-outline-info">modifier</a></td>
                 </tr>
             {% else %}
                 <tr>
