@@ -5,36 +5,48 @@
 {% block body %}
     <a href="{{ path('item_index') }}">Retour</a>
     <h1><img src="{{ asset(('img/gw2/')) }}{{ item.image }}" alt="" class="item_icon"> {{ item.name }}</h1>
+    <p>{{ item.info.description }}</p>
     <div class="row">
 
         <div id="itemInfo" class="col-4">
             <table id="tableItemInfo" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">API ID</th>
+                        <th scope="col">{{ item.info.id }}</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>Vente</td>
-                        <td>
-                            {% include 'item/_price.html.twig' with {'price': item.price.sell} %}
-                        </td>
+                        <td>{% include 'item/_price.html.twig' with {'price': item.price.sell} %}</td>
                     </tr>
                     <tr>
                         <td>Achat</td>
-                        <td>
-                            {% include 'item/_price.html.twig' with {'price': item.price.buy} %}
-                        </td>
+                        <td>{% include 'item/_price.html.twig' with {'price': item.price.buy} %}</td>
                     </tr>
                     <tr>
                         <td>Vendre à</td>
-                        <td>
-                            {% include 'item/_price.html.twig' with {'price': item.price_to_sell} %}
-                        </td>
+                        <td>{% include 'item/_price.html.twig' with {'price': item.price_to_sell} %}</td>
+                    </tr>
+                    <tr>
+                        <td>Lien message</td>
+                        <td>{{ item.info.chat_link }}</td>
                     </tr>
                 </tbody>
             </table>
-            <a href="{{ path('item_edit', {'id': item.id}) }}" class="btn btn-outline-info">Modifier</a>
+            <a href="https://wiki.guildwars2.com/wiki/{{item.name|replace({' ':'_'})}}" class="btn btn-outline-info" target="blank">Wiki</a>
+
         </div>
 
-        <div id="itemListingBuys" class="col-4">
+        <div id="itemListingBuys" class="col-4 itemListing">
             <table id="tableShowItem" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Prix d'achat</th>
+                        <th scope="col">Quantité</th>
+                    </tr>
+                </thead>
                 <tbody>
                     {% for buys in item.listing.buys %}
                         <tr>
@@ -46,8 +58,14 @@
             </table> 
         </div>
 
-        <div id="itemListingSells" class="col-4">
+        <div id="itemListingSells" class="col-4 itemListing">
             <table id="tableShowItem" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Prix de vente</th>
+                        <th scope="col">Quantité</th>
+                    </tr>
+                </thead>
                 <tbody>
                 <tbody>
                     {% for sells in item.listing.sells %}

@@ -78,7 +78,7 @@ class ItemController extends AbstractController
         $item['price_to_sell'] = $gw2->convertPrice($item['price_to_sell']);
         $item['price'] = $gw2->getPriceItem($item['api_id']);
         $item['listing'] = $gw2->getListing($item['api_id'], 10);
-//        var_dump($item['listing']);die();
+        $item['info'] = $gw2->getItem($item['api_id']);
         
         return $this->render('item/show.html.twig', [
             'item' => $item,

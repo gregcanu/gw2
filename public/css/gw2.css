@@ -33,6 +33,7 @@
     color : #d47f46;
 }
 
-/*#tableShowItem tbody tr:nth-child(odd) {
-    background-color: #4E5D6C; 
-}*/
+.itemListing {
+    height: 275px;
+    overflow: auto;
+}
