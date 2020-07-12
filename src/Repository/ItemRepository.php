@@ -26,6 +26,18 @@ class ItemRepository extends ServiceEntityRepository {
                         ->getArrayResult()
         ;
     }
+    
+    // Retourne un item selon son id dans un tableau
+    public function findItem($id) {
+        $item = $this->createQueryBuilder('i')
+                    ->where('i.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getArrayResult()
+        ;
+        
+        return $item[0];
+    }
 
     // /**
     //  * @return Item[] Returns an array of Item objects

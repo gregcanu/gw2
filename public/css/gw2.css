@@ -4,6 +4,10 @@
     border-radius: 4px;
 }
 
+.table tbody tr:nth-child(odd){
+    background-color: #4E5D6C; 
+}
+
 #tableGw2Items tbody tr:nth-child(odd) {
     background-color: #4E5D6C; 
 }
@@ -28,3 +32,7 @@
 .copper {
     color : #d47f46;
 }
+
+/*#tableShowItem tbody tr:nth-child(odd) {
+    background-color: #4E5D6C; 
+}*/

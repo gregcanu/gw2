@@ -1,0 +1,3 @@
+{% if price.gold != 0 %} <span class="gold"> {{ price.gold }} </span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
+{% if price.silver != 0 or price.gold > 0%} <span class="silver"> {{ price.silver }} </span><img src="{{ asset(('img/gw2/silver.png')) }}"> {% endif %}
+<span class="copper"> {{ price.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 

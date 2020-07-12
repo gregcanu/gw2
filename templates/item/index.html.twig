@@ -39,7 +39,7 @@
                         <span class="copper"> {{ item.price.sell.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 
                     </td>
                     <td class="cell_sell col-2 align_right">
-                        {% if item.price_to_sell.gold != 0 %} {{ item.price_to_sell.gold }} <span class="gold"> </span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
+                        {% if item.price_to_sell.gold != 0 %} <span class="gold"> {{ item.price_to_sell.gold }} </span> <img src="{{ asset(('img/gw2/gold.png')) }}"> {% endif %}
                         {% if item.price_to_sell.silver != 0 or item.price_to_sell.gold > 0 %} <span class="silver"> {{ item.price_to_sell.silver }} </span> <img src="{{ asset(('img/gw2/silver.png')) }}"> {% endif %}
                         <span class="copper"> {{ item.price_to_sell.copper }} </span> <img src="{{ asset(('img/gw2/copper.png')) }}"> 
                     </td>

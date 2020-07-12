@@ -72,8 +72,14 @@ class ItemController extends AbstractController
     /**
      * @Route("/{id}", name="item_show", methods={"GET"})
      */
-    public function show(Item $item): Response
+    public function show(ItemRepository $itemRepository, Gw2Repository $gw2, $id): Response
     {
+        $item = $itemRepository->findItem($id);
+        $item['price_to_sell'] = $gw2->convertPrice($item['price_to_sell']);
+        $item['price'] = $gw2->getPriceItem($item['api_id']);
+        $item['listing'] = $gw2->getListing($item['api_id'], 10);
+//        var_dump($item['listing']);die();
+        
         return $this->render('item/show.html.twig', [
             'item' => $item,
         ]);

@@ -23,9 +23,30 @@ class Gw2Repository {
     /* 
      * Récupère tous les prix d'achat et de vente d'un item selon son id
      * id: id de l'item
+     * number : nombre de prix à récupérer (Ex: 10 veut dire qu'on va récupérer les 10 premiers prix de vente et d'achat)
      */
-    public function getListing($id) {
-        return $this->request($id, 'listing');
+    public function getListing($id, $number) {
+        $listing = $this->request($id, 'listing');
+        array_splice($listing['buys'], 10);
+        array_splice($listing['sells'], 10);
+        
+        foreach($listing['buys'] as $item_buy) {
+            $listing_format['buys'][] =
+            [
+                'price' => $this->convertPrice($item_buy['unit_price']),
+                'quantity' => $item_buy['quantity']
+            ];
+        }
+        
+        foreach($listing['sells'] as $item_sell) {
+            $listing_format['sells'][] =
+                [
+                    'price' => $this->convertPrice($item_sell['unit_price']),
+                    'quantity' => $item_sell['quantity']
+                ];
+        }
+        
+        return $listing_format;
     }
     
     /* 
