@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\Gw2Repository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @Route("/item")
@@ -49,13 +50,25 @@ class ItemController extends AbstractController
     /**
      * @Route("/new", name="item_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $item = new Item();
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupère les infos de l'item via l'API GW2 grâce à son id
+            $item_id = $form['api_id']->getData();
+            $gw2 = new Gw2Repository();
+            
+            $item_info = $gw2->getItem($item_id);
+            $item->setName($item_info['name']);
+            
+            // Enregistre l'image provenant de l'API dans le dossier img et ajoute son nom en bdd
+            $image_directory = $this->getParameter('kernel.project_dir') . '/public/img/gw2/';
+            $image_name = strtolower(str_replace(' ', '_', $item_info['name']).'.png');
+            file_put_contents($image_directory.$image_name, file_get_contents($item_info['icon']));
+            $item->setImage($image_name);
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -94,6 +107,12 @@ class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form['image']->getData();
+            $image_directory = $this->getParameter('kernel.project_dir') . '/public/img/gw2/';
+            $image_name = strtolower(str_replace(' ', '_', $form['name']->getData()).'.'.$image->guessExtension());
+            $image->move($image_directory, $image_name);
+            $item->setImage($image_name);
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('item_index');
