@@ -101,21 +101,26 @@ class ItemController extends AbstractController
     /**
      * @Route("/{id}/edit", name="item_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Item $item): Response
+    public function edit(Request $request, Item $item, ItemRepository $itemRepository): Response
     {
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $image = $form['image']->getData();
-            $image_directory = $this->getParameter('kernel.project_dir') . '/public/img/gw2/';
-            $image_name = strtolower(str_replace(' ', '_', $form['name']->getData()).'.'.$image->guessExtension());
-            $image->move($image_directory, $image_name);
-            $item->setImage($image_name);
-            
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('item_index');
+            // Si l'image a été modifié
+            if($image != "null") {
+                $image_directory = $this->getParameter('kernel.project_dir') . '/public/img/gw2/';
+                $image_name = strtolower(str_replace(' ', '_', $form['name']->getData()).'.'.$image->guessExtension());
+                $image->move($image_directory, $image_name);
+                $item->setImage($image_name);
+            } else {
+                // Récupère le nom de l'image en bdd car l'input type file n'a pas de valeur par défaut et renvoie null car le champ n'a pas été rempli
+                $item_save = $itemRepository->findItem($item->getId());
+                $item->setImage($item_save['image']);
+            }
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('item_index');
         }
 
         return $this->render('item/edit.html.twig', [

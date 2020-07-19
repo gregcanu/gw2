@@ -18,7 +18,8 @@ class ItemType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'data_class' => null,
-                'required' => false
+                'required' => false,
+                'empty_data' => 'null'
             ])
             ->add('api_id')
             ->add('price_to_sell')
