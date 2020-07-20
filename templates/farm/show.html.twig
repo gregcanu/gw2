@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Farm{% endblock %}
+
+{% block body %}
+    <h1>Farm</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ farm.id }}</td>
+            </tr>
+            <tr>
+                <th>Map</th>
+                <td>{{ farm.map }}</td>
+            </tr>
+            <tr>
+                <th>Waypoint_name</th>
+                <td>{{ farm.waypointName }}</td>
+            </tr>
+            <tr>
+                <th>Waypoint_code</th>
+                <td>{{ farm.waypointCode }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ farm.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('farm_index') }}">back to list</a>
+
+    <a href="{{ path('farm_edit', {'id': farm.id}) }}">edit</a>
+
+    {{ include('farm/_delete_form.html.twig') }}
+{% endblock %}

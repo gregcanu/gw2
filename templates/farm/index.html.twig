@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Farm index{% endblock %}
+
+{% block body %}
+    <h1>Farm index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Map</th>
+                <th>Waypoint</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for farm in farms %}
+            <tr>
+                <td>{{ farm.map }}</td>
+                <td>{{ farm.waypointName }} {{ farm.waypointCode }}</td>
+                <td><img src="{{ asset(('img/gw2/')) }}{{ farm.item.image }}" alt="" style="height: 19px; width: 19px;"> {{ farm.item }}</td>
+                <td>{{ farm.quantity }}</td>
+                <td>
+                    <a href="{{ path('farm_show', {'id': farm.id}) }}">show</a>
+                    <a href="{{ path('farm_edit', {'id': farm.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('farm_new') }}">Create new</a>
+{% endblock %}

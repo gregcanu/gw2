@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,21 @@ class Item
      * @ORM\Column(type="integer")
      */
     private $price_to_sell;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Farm::class, mappedBy="item")
+     */
+    private $farms;
+
+//    public function __construct()
+//    {
+//        $this->farms = new ArrayCollection();
+//    }
+    
+    public function __construct()
+    {
+        $this->farms = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -88,5 +105,47 @@ class Item
         $this->price_to_sell = $price_to_sell;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Farm[]
+     */
+    public function getFarms(): Collection
+    {
+        return $this->farms;
+    }
+
+    public function addFarm(Farm $farm): self
+    {
+        if (!$this->farms->contains($farm)) {
+            $this->farms[] = $farm;
+            $farm->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFarm(Farm $farm): self
+    {
+        if ($this->farms->contains($farm)) {
+            $this->farms->removeElement($farm);
+            // set the owning side to null (unless already changed)
+            if ($farm->getItem() === $this) {
+                $farm->setItem(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    /**
+     * Generates the magic method
+     * 
+     */
+    public function __toString(){
+        // to show the name of the Category in the select
+        return $this->name;
+        // to show the id of the Category in the select
+        // return $this->id;
     }
 }

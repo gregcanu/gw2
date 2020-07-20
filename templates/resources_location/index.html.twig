@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ResourcesLocation index{% endblock %}
+
+{% block body %}
+    <h1>ResourcesLocation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Map</th>
+                <th>Waypoint</th>
+                <th>Resource</th>
+                <th>Quantity</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for resources_location in resources_locations %}
+            <tr>
+                <td>{{ resources_location.id }}</td>
+                <td>{{ resources_location.map }}</td>
+                <td>{{ resources_location.waypoint }}</td>
+                <td>{{ resources_location.resource }}</td>
+                <td>{{ resources_location.quantity }}</td>
+                <td>
+                    <a href="{{ path('resources_location_show', {'id': resources_location.id}) }}">show</a>
+                    <a href="{{ path('resources_location_edit', {'id': resources_location.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('resources_location_new') }}">Create new</a>
+{% endblock %}

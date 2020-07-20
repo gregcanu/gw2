@@ -26,11 +26,15 @@
 
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('cv') }}">CV</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="gw2">Guildwars 2</a>
+                    <div class="dropdown-menu" aria-labbelledby="gw2">
+                        <a class="dropdown-item" href="{{ path('item_index') }}">Items</a>
+                        <a class="dropdown-item" href="{{ path('farm_index') }}">Ressources quotidiennes</a>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('item_index') }}">Items GW2</a>
+                    <a class="nav-link" href="{{ path('cv') }}">CV</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('users_show') }}">Utilisateurs</a>
