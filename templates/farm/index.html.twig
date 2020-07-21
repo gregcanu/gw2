@@ -1,39 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Farm index{% endblock %}
+{% block title %}Farming Quotidien{% endblock %}
 
 {% block body %}
-    <h1>Farm index</h1>
-
-    <table class="table">
+    <div class="page-header">
+        <h1>Farming Quotidien</h1>
+    </div>
+    <br>
+    <a href="{{ path('farm_new') }}" class="btn btn-outline-primary">Ajouter une map</a>    
+    <table id="farmTable" class="table table-hover">
         <thead>
-            <tr>
-                <th>Map</th>
-                <th>Waypoint</th>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>actions</th>
+            <tr class="d-flex">
+                <th class="col-3">Map</th>
+                <th class="col-3">TP</th>
+                <th class="col-2">Ressource</th>
+                <th class="col-2">Quantité moyenne</th>
+                <th class="col-2"></th>
             </tr>
         </thead>
         <tbody>
         {% for farm in farms %}
-            <tr>
-                <td>{{ farm.map }}</td>
-                <td>{{ farm.waypointName }} {{ farm.waypointCode }}</td>
-                <td><img src="{{ asset(('img/gw2/')) }}{{ farm.item.image }}" alt="" style="height: 19px; width: 19px;"> {{ farm.item }}</td>
-                <td>{{ farm.quantity }}</td>
-                <td>
-                    <a href="{{ path('farm_show', {'id': farm.id}) }}">show</a>
-                    <a href="{{ path('farm_edit', {'id': farm.id}) }}">edit</a>
-                </td>
+            <tr class="d-flex">
+                <td class="col-3">{{ farm.map }}</td>
+                <td class="col-3">{{ farm.waypointName }} {{ farm.waypointCode }}</td>
+                <td class="col-2"><img src="{{ asset(('img/gw2/')) }}{{ farm.item.image }}" alt="" style="height: 19px; width: 19px;"> {{ farm.item }}</td>
+                <td class="col-2">{{ farm.quantity }}</td>
+                <td class="col-2"><a href="{{ path('farm_edit', {'id': farm.id}) }}" class="btn btn-outline-info">Modifier</a></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucune map de farm trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('farm_new') }}">Create new</a>
 {% endblock %}

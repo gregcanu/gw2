@@ -37,3 +37,12 @@
     height: 275px;
     overflow: auto;
 }
+
+#farmTable td {
+    vertical-align: middle !important;
+}
+
+#farmTable .btn {
+    padding: 0.200rem 0.50rem;
+    font-size: 0.875rem !important;
+}

@@ -21,6 +21,9 @@ class FarmRepository extends ServiceEntityRepository
     
     public function findAllFarm() {
         $farms = $this->createQueryBuilder('f')
+                        ->where('f.active = :val')
+                        ->setParameter('val', 1)
+                        ->orderBy('f.sort')
                         ->getQuery()
                         ->getResult()
         ;
@@ -30,6 +33,16 @@ class FarmRepository extends ServiceEntityRepository
         }
         
         return $farms;
+    }
+    
+    public function getLastSortValue() {
+        $value = $this->createQueryBuilder('f')
+                ->select('MAX(f.sort) as max_sort')
+                        ->getQuery()
+                        ->getResult()
+        ;
+        
+        return $value[0]['max_sort'];
     }
 
     // /**

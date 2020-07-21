@@ -1,11 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Farm{% endblock %}
+{% block title %}Ajout map farm{% endblock %}
 
 {% block body %}
-    <h1>Create new Farm</h1>
+    <a href="{{ path('farm_index') }}">Retour</a>
+    <br><br>
+    <div class="page-header">
+        <h1>Ajouter une map</h1>
+    </div>
 
-    {{ include('farm/_form.html.twig') }}
-
-    <a href="{{ path('farm_index') }}">back to list</a>
+    {#    {{ form_start(form) }}#}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="row col-8">
+        <div class="col-4">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.map, 'Map', {'label_attr':{'class': ''}}) }}
+                {{ form_widget(form.map, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                {{ form_label(form.waypoint_name, 'Nom TP', {'label_attr':{'class': ''}}) }}
+                {{ form_widget(form.waypoint_name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                {{ form_label(form.waypoint_code, 'Code TP', {'label_attr':{'class': ''}}) }}
+                {{ form_widget(form.waypoint_code, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.item, 'Ressource', {'label_attr':{'class': ''}}) }}
+                {{ form_widget(form.item, {'attr': {'class': 'form-control custom-select'}}) }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                {{ form_label(form.quantity, 'Quantité', {'label_attr':{'class': ''}}) }}
+                {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+            {#                        {{ form_label(form.sort, 'Ordre', {'label_attr':{'class': ''}}) }}#}
+            {{ form_widget(form.sort, {'attr': {'class': 'form-control', 'style': 'display:none'}}) }}
+        </div>
+    </div>
+    <div class="form-group col-4">
+        <div class="custom-control custom-switch">
+            {{ form_widget(form.active, {'attr': {'class': 'custom-control-input'}}) }}
+            {{ form_label(form.active, 'Actif', {'label_attr':{'class': 'custom-control-label'}}) }}
+        </div>
+    </div>
+    <div class="form-group col-4">
+        <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

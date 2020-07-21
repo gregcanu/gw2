@@ -43,6 +43,16 @@ class Farm
      */
     private $quantity;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $sort;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +114,30 @@ class Farm
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

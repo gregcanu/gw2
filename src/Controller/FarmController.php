@@ -28,13 +28,16 @@ class FarmController extends AbstractController
     /**
      * @Route("/new", name="farm_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function create(Request $request, FarmRepository $farmRepository): Response
     {
         $farm = new Farm();
         $form = $this->createForm(FarmType::class, $farm);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // le nouveau farm est ajouté à la fin par défaut (sort+1 que le plus grand en bdd)
+            $farm->setSort($farmRepository->getLastSortValue()+1);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($farm);
             $entityManager->flush();
