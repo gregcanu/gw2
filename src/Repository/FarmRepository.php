@@ -27,7 +27,7 @@ class FarmRepository extends ServiceEntityRepository
                         ->getQuery()
                         ->getResult()
         ;
-        
+
         foreach ($farms as $farm) {
             $farm->getItem()->getName();
         }

@@ -11,21 +11,25 @@
     <table id="farmTable" class="table table-hover">
         <thead>
             <tr class="d-flex">
-                <th class="col-3">Map</th>
-                <th class="col-3">TP</th>
+                <th class="col-2">Map</th>
+                <th class="col-2">TP</th>
                 <th class="col-2">Ressource</th>
-                <th class="col-2">Quantité moyenne</th>
-                <th class="col-2"></th>
+                <th class="col-1">Quantité moyenne</th>
+                <th class="col-2">Prix de vente</th>
+                <th class="col-2">Bénéfice</th>
+                <th class="col-1"></th>
             </tr>
         </thead>
         <tbody>
             {% for farm in farms %}
                 <tr class="d-flex">
-                    <td class="col-3">{{ farm.map }}</td>
-                    <td class="col-3">{{ farm.waypointName }} {{ farm.waypointCode }}</td>
-                    <td class="col-2"><img src="{{ asset(('img/gw2/')) }}{{ farm.item.image }}" alt="" style="height: 19px; width: 19px;"> {{ farm.item }}</td>
-                    <td class="col-2">{{ farm.quantity }}</td>
-                    <td class="col-2"><a href="{{ path('farm_edit', {'id': farm.id}) }}" class="btn btn-outline-info">Modifier</a></td>
+                    <td class="col-2">{{ farm.farm_object.map }}</td>
+                    <td class="col-2">{{ farm.farm_object.waypointName }} {{ farm.farm_object.waypointCode }}</td>
+                    <td class="col-2"><img src="{{ asset(('img/gw2/')) }}{{ farm.farm_object.item.image }}" alt="" style="height: 19px; width: 19px;"> {{ farm.farm_object.item }}</td>
+                    <td class="col-1">{{ farm.farm_object.quantity }}</td>
+                    <td class="col-2">{% include 'item/_price.html.twig' with {'price': farm.price_to_sell} %}</td>
+                    <td class="col-2">{% include 'item/_price.html.twig' with {'price': farm.earning} %}</td>
+                    <td class="col-1"><a href="{{ path('farm_edit', {'id': farm.farm_object.id}) }}" class="btn btn-outline-info">Modifier</a></td>
                 </tr>
             {% else %}
                 <tr>
@@ -36,7 +40,7 @@
                 <td>
                     Code de chaque TP à copier dans le chat in-game :
                     {% for farm in farms %}
-                        {{ farm.waypointCode }}
+                        {{ farm.farm_object.waypointCode }}
                     {% endfor %}
                 </td>
             </tr>

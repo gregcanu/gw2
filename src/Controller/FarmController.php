@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Farm;
 use App\Form\FarmType;
 use App\Repository\FarmRepository;
+use App\Repository\Gw2Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,19 @@ class FarmController extends AbstractController
     /**
      * @Route("/", name="farm_index", methods={"GET"})
      */
-    public function index(FarmRepository $farmRepository): Response
+    public function index(FarmRepository $farmRepository, Gw2Repository $gw2): Response
     {
+        $farms_object = $farmRepository->findAllFarm();
+        $farms = [];
+        foreach($farms_object as $key => $farm) {
+            $farms[$key]['farm_object'] = $farm;
+            $farms[$key]['price_to_sell'] = $gw2->convertPrice($farm->getItem()->getPriceToSell());
+            $farms[$key]['earning'] = $gw2->convertPrice(round($farm->getQuantity() * $farm->getItem()->getPriceToSell() * 0.85));
+//            var_  dump($farms);die();
+        }
+        
         return $this->render('farm/index.html.twig', [
-            'farms' => $farmRepository->findAllFarm(),
+            'farms' => $farms,
         ]);
     }
 
